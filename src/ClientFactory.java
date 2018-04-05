@@ -18,19 +18,32 @@ public class ClientFactory implements Runnable {
             DataOutputStream outputStream = new DataOutputStream(serverDialogue.getOutputStream());
             DataInputStream inputStream = new DataInputStream(serverDialogue.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Stream of in and out has been created");
-            String getText = bufferedReader.readLine();
-            outputStream.writeUTF(getText);
-            outputStream.flush();
-            System.out.println("Your message was successfully sent");
-            System.out.println("Receive your message from Server");
-            Thread.sleep(1000);
-            String textFromServer = inputStream.readUTF();
-            System.out.println("Ваше сообщение от Сервера: " + textFromServer);
+            int i = 0;
+            // создаём рабочий цикл
+            while (i < 5) {
+
+                // пишем сообщение автогенерируемое циклом клиента в канал
+                // сокета для сервера
+                outputStream.writeUTF("clientCommand " + i + " sent");
+
+                // проталкиваем сообщение из буфера сетевых сообщений в канал
+                outputStream.flush();
+
+                // ждём чтобы сервер успел прочесть сообщение из сокета и
+                // ответить
+
+                System.out.println("Client wrote & start waiting for data from server...");
+
+                // забираем ответ из канала сервера в сокете
+                // клиента и сохраняем её в ois переменную, печатаем на
+                // консоль
+                System.out.println("reading...");
+                String in = inputStream.readUTF();
+                System.out.println(in);
+                i++;
+            }
         } catch (IOException io) {
             io.printStackTrace();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
         }
     }
 }
