@@ -11,7 +11,7 @@ public class ClientGetter {
             DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
             while(!socket.isInputShutdown()){
                 if(bufferedReader.ready()) {
-                    System.out.println("ClientEngine starts writing in channel");
+                    System.out.println("ClientEngineWriter starts writing in channel");
                     String text = bufferedReader.readLine();
                     outputStream.writeUTF(text);
                     outputStream.flush();
