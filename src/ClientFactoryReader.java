@@ -16,20 +16,24 @@ public class ClientFactoryReader implements Runnable {
     public void run() {
         try {
             //DataOutputStream outputStream = new DataOutputStream(serverDialogue.getOutputStream());
-            DataInputStream inputStream = new DataInputStream(serverDialogue.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            while (!serverDialogue.isOutputShutdown())
-                if (bufferedReader.ready()) {
-                    //outputStream.writeUTF(bufferedReader.readLine());
-                    //outputStream.flush();
-                    //System.out.println("Client wrote & start waiting for data from server...");
-                    System.out.println("reading...");
-                    String in = inputStream.readUTF();
-                    System.out.println(in);
-                }
-
+            InputStreamReader inputStream = new InputStreamReader(serverDialogue.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStream);
+            String msg;
+            while ( (msg = bufferedReader.readLine()) != null) {
+                //if (bufferedReader.ready()) {
+                //outputStream.writeUTF(bufferedReader.readLine());
+                //outputStream.flush();
+                //System.out.println("Client wrote & start waiting for data from server...");
+                System.out.println("reading...");
+                Thread.sleep(2000);
+                //String in = bufferedReader.readLine();
+                System.out.println(msg);
+                //}
+            }
         } catch (IOException io) {
             io.printStackTrace();
+        } catch ( InterruptedException ie) {
+            ie.printStackTrace();
         }
     }
 }

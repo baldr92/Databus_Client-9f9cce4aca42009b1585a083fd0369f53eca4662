@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 public class ClientEngineWriter {
     //Класс выполняющий запуск нескольких потоков клиентов
     public static void main (String args[]) {
-            ExecutorService executorService = Executors.newFixedThreadPool(2);
+            ExecutorService executorService = Executors.newFixedThreadPool(4);
             executorService.execute(new ClientFactoryWriter());
 
             executorService.shutdown();

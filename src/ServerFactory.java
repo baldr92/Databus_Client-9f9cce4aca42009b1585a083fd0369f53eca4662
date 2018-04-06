@@ -24,6 +24,7 @@ public class ServerFactory implements Runnable {
                 //writing block
                 System.out.println("Start writing to channel");
                 outputStream.writeUTF(message);
+                Thread.sleep(2000);
                 System.out.println("Your message " + message + " has been sent to Client" );
                 outputStream.flush();
             }
@@ -32,6 +33,8 @@ public class ServerFactory implements Runnable {
         } catch (IOException io) {
             io.printStackTrace();
             System.out.println(io.getMessage());
+        } catch  (InterruptedException ie) {
+            ie.printStackTrace();
         }
     }
 }
